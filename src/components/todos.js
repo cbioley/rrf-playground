@@ -25,13 +25,13 @@ const createTodo = () => {
 const addTodo = dispatch => e => {
   e.preventDefault();
   const todo = createTodo();
-  dispatch(actions.push('todos', todo));
+  dispatch(actions.push('todos.todos', todo));
 }
 
 const removeTodo = ({ dispatch, id, index })=> e => {
   e.preventDefault();
   console.log('Request deletion of Todo with id: ', id);
-  dispatch(actions.remove('todos', index))
+  dispatch(actions.remove('todos.todos', index))
 }
 
 const Todo = ({ dispatch, id, index }) =>
@@ -40,7 +40,7 @@ const Todo = ({ dispatch, id, index }) =>
       className="btn btn-danger"
       onClick={ removeTodo({ dispatch, id, index }) }
       style={{
-        '-webkit-transform': 'translate(-36px, 34px)',
+        WebkitTransform: 'translate(-36px, 34px)',
         transform: 'translate(-36px, 34px)',
       }}
       type="button"
@@ -49,7 +49,7 @@ const Todo = ({ dispatch, id, index }) =>
     </button>
     <Field
       className="form-group"
-      model={ track('todos[].title', todo => todo.id === id) }
+      model={ track('todos.todos[].title', todo => todo.id === id) }
       validators={{
         required: val => val && val.length
       }}
@@ -60,7 +60,7 @@ const Todo = ({ dispatch, id, index }) =>
       />
     </Field>
     <Errors
-      model={ track('todos[].title', todo => todo.id === id) }
+      model={ track('todos.todos[].title', todo => todo.id === id) }
       messages={{
         required: '* REQUIRED *',
       }}
@@ -72,7 +72,7 @@ const Todo = ({ dispatch, id, index }) =>
 
 class Todos extends Component {
   render() {
-    const { dispatch, todos, todosForm } = this.props;
+    const { dispatch, todos: { todos }, todosForm } = this.props;
     return (
       <Wow title="RRF Todos">
         <h3>Form status: { todosForm.valid ? 'valid' : 'invalid' }</h3>
